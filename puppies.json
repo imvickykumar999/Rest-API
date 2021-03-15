@@ -1,0 +1,13 @@
+{
+    "puppies": [
+        {
+            "name": "tommy"
+        },
+        {
+            "name": "rufus"
+        },
+        {
+            "name": "sampoo"
+        }
+    ]
+}
