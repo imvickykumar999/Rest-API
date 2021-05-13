@@ -10,3 +10,4 @@ SQLAlchemy==1.3.0
 flask-login
 imvickykumar999
 PyOpenGL
+eventlet
