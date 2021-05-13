@@ -2,7 +2,7 @@ os-sys
 Flask==1.0.0
 Flask-SQLAlchemy==2.3.2
 flask_restful
-secure_check
+Flask-Security
 flask_jwt
 flask_migrate
 gunicorn==19.7.1
