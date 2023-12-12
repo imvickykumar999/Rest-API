@@ -1,6 +1,16 @@
 
 # https://programminghistorian.org/en/lessons/creating-apis-with-python-and-flask
 
+'''
+{
+    "author": "Robert A. Heinlein",
+    "first_sentence": "Our troop had been up in the High Sierras that day and we were late getting back.",
+    "id": null,
+    "published": 1951,
+    "title": "Farmer in the Sky"
+}
+'''
+
 import flask
 from flask import request, jsonify
 import sqlite3
