@@ -3,14 +3,16 @@
 Flask maps HTTP requests to Python functions. 
 In this case, we’ve mapped one URL path (‘/’) to one function, home.
 
-https://programminghistorian.org/en/lessons/creating-apis-with-python-and-flask#documentation-and-examples
+https://programminghistorian.org/en/lessons/creating-apis-with-python-and-flask#creating-the-api
 '''
 
-from flask import Flask, request, render_template, jsonify
+import flask
+from flask import request, jsonify
 
-app = Flask(__name__)
+app = flask.Flask(__name__)
 app.config["DEBUG"] = True
 
+# Create some test data for our catalog in the form of a list of dictionaries.
 books = [
     {'id': 0,
      'title': 'A Fire Upon the Deep',
@@ -29,26 +31,52 @@ books = [
      'published': '1975'}
 ]
 
+
 @app.route('/', methods=['GET'])
 def home():
-    return render_template('index.html')
+    return '''<h1>Distant Reading Archive</h1>
+<p>A prototype API for distant reading of science fiction novels.</p>
+
+<ul>
+  <a target="_blank" href="/api/v1/resources/books?id=0">
+    <li>/api/v1/resources/books?id=0</li>
+  </a>
+  <a target="_blank" href="/api/v1/resources/books?id=1">
+    <li>/api/v1/resources/books?id=1</li>
+  </a>
+  <a target="_blank" href="/api/v1/resources/books?id=2">
+    <li>/api/v1/resources/books?id=2</li>
+  </a>
+</ul>
+'''
+
 
 @app.route('/api/v1/resources/books/all', methods=['GET'])
 def api_all():
     return jsonify(books)
 
+
 @app.route('/api/v1/resources/books', methods=['GET'])
 def api_id():
+    # Check if an ID was provided as part of the URL.
+    # If ID is provided, assign it to a variable.
+    # If no ID is provided, display an error in the browser.
     if 'id' in request.args:
         id = int(request.args['id'])
     else:
         return "Error: No id field provided. Please specify an id."
-    
-    results=[]
+
+    # Create an empty list for our results
+    results = []
+
+    # Loop through the data and match results that fit the requested ID.
+    # IDs are unique, but other fields might return many results
     for book in books:
         if book['id'] == id:
             results.append(book)
+
+    # Use the jsonify function from Flask to convert our list of
+    # Python dictionaries to the JSON format.
     return jsonify(results)
 
-if __name__ == '__main__':
-    app.run()
+app.run()
